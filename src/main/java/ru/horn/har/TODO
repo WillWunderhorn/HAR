@@ -1,0 +1,37 @@
+@TODO
+
+Описание тестового задания:
+1. Разработать сервис по загрузке HAR файла, получению удалению обновлению
+2. При загрузке файла - сохранять его содержимое в БД (версия архива, браузер в котором был создан архив, а так же полное содержимое файла в базе(json))
+3. При успешном сохранении файла - отправлять его содержимое в очередь сообщений
+4. Из очереди прочитать сообщение и преобразовать его в внутренную модель данных
+5. Сохранить результат преобразования в базу данных (request)
+6. Таблицы должны быть связаны сквозным идентификатором
+
+Модель данных:
+public class TestProfile {
+	public List<Request> requests;
+}
+
+public class Request {
+	private String url;
+	private String body;
+	private Map<String, String> headers;
+	private Map<String, String> params;
+	private HttpMethod method;
+	private Double perc = 0.0d;
+}
+
+Исходный код опубликовать на github.
+Требования к тестовому заданию - приложение должно быть покрыто unit и end-to-end тестами более чем на 75 % и запускаться в docker контейнере.
+
+Используемый технологии:
+1. Spring
+2. Spring Boot
+3. Hibernate
+4. Junit 5
+6. Mockito
+7. Rabbitmq
+8. Liquibase
+9. Postgresql
+10. Docker

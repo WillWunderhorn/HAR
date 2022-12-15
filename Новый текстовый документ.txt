@@ -1,0 +1,617 @@
+let name = prompt('Name')
+let age = prompt('Age')
+let like = prompt('Like')
+class Person{
+    constructor(name, age, like){
+        this.name = name
+        this.age = age
+        this.like = like
+    }
+    ShowName() {
+        return "He's name is: "+name
+    }
+    ShowAge() {
+        return "he's age is: "+(2021 - age)
+    }
+    ShowLike(){
+        let add = prompt('add')
+        return "and he loves "+ like +" and "+ add
+    }
+}
+let Per = new Person
+console.log(Per.ShowName(), Per.ShowAge(), Per.ShowLike())
+
+_____________________________________________________________________
+
+drop table goods;
+
+create table goods(
+    id int,
+    title char(30),
+    quantity number,
+    in_stock char(1) check (in_stock in ('Y','N')),
+    price number check(price != 0),
+    primary key (title, quantity, id, price)
+);
+
+insert into goods (id, title, quantity, price, in_stock) values (1, 'Велосипед',10,14000,'Y');
+insert into goods (id, title, quantity, price, in_stock) values (2, 'Самокат',20,14000,'N');
+insert into goods (id, title, quantity, price, in_stock) values (3, 'Моноцикл',30,1000,'N');
+insert into goods (id, title, quantity, price, in_stock) values (4, 'Тандем',1,140,'Y');
+insert into goods (id, title, quantity, price, in_stock) values (5, 'еще что то',5,1000,'N');
+
+select * from goods
+
+create view temp2 as
+select TITLE, PRICE,ID,IN_STOCK from goods where PRICE < 10000
+select * from temp2
+
+update goods
+set price = 10000
+where title = 'Велосипед'
+
+select * from goods
+
+delete from goods where id = 0
+
+alter table goods
+drop column rating
+
+select
+    first_name,
+    last_name,
+    salary
+from hr.employees
+where salary in (select max(salary) from hr.employees) or
+salary in (select min(salary) from hr.employees)
+
+Найдите имена и фамилии сотрудников с максимальной зарплатой HR.EMPLOYEES 
+select 
+    FIRST_NAME,
+    LAST_NAME
+from hr.employees 
+where salary = (select max(salary) from hr.employees )
+
+select * from hr.employees
+
+select
+    case
+        when SALARY > (select avg(SALARY) from hr.employees)
+            then 1
+        else 0
+    end as new_column,
+    SALARY
+from hr.employees
+
+select avg(SALARY) from hr.employees
+
+select
+    count(
+        case
+            when salary > 10000
+                then 1
+            else 0
+        end) as count_salary_group,
+    case
+        when salary > 10000
+            then 1
+        else 0
+    end as salary_group
+from hr.employees
+group by case
+    when salary > 10000
+        then 1
+    else 0
+end
+
+select 
+    salary_group,
+    count(salary_group)
+from (
+    select
+
+select
+    t1.first_name,
+    t1.last_name
+from hr.employees t1
+inner join (
+            select
+                department_id,
+                max(salary) as max_salary
+            from hr.employees
+            group by department_id
+            ) t2
+on t1.department_id = t2.department_id and t1.salary = t2.max_salary
+
+
+select * from hr.employees
+select * from OE.CUSTOMERS
+select * from OE.orders
+select * from oe.order_items
+
+select 
+    sum(t2.ORDER_TOTAL + t3.UNIT_PRICE),
+    t1.CUST_FIRST_NAME,
+    t1.CUST_LAST_NAME
+from OE.orders t2
+    inner join oe.order_items t3
+    inner join OE.CUSTOMERS t1
+on t2.ORDER_ID = t3.ORDER_ID
+on t1.CUSTOMER_ID = t2.CUSTOMER_ID
+
+select 
+    sum(t2.ORDER_TOTAL + t3.UNIT_PRICE),
+    sum(t2.CUSTOMER_ID),
+    t1.CUST_FIRST_NAME,
+    t2.CUSTOMER_ID
+from OE.orders t2
+    inner join OE.CUSTOMERS t1
+    inner join oe.order_items t3
+on t2.ORDER_ID = t3.ORDER_ID
+on t1.CUSTOMER_ID = t2.CUSTOMER_ID
+
+select
+    case
+        when GENDER = 'M'
+            then 1
+        else 0
+    end as GENDER_GROUP,
+    GENDER
+from OE.CUSTOMERS
+
+select
+    case
+        when GENDER = 'M'
+            then 1
+        else 0
+    end as GENDER_GROUP,
+    GENDER
+from OE.CUSTOMERS
+
+select
+    t2.CUSTOMER_ID,
+    t2.ORDER_TOTAL,
+    t3.QUANTITY
+from OE.CUSTOMERS t1
+    inner join OE.orders t2
+    inner join oe.order_items t3
+on t2.ORDER_ID = t3.ORDER_ID
+on t1.CUSTOMER_ID = t2.CUSTOMER_ID
+
+select 
+    sum(t2.ORDER_TOTAL + t3.UNIT_PRICE),
+    sum(t2.CUSTOMER_ID)
+from OE.orders t2
+    inner join oe.order_items t3
+on t2.ORDER_ID = t3.ORDER_ID
+
+-----ЕСЛИ НУЖНО ПОПУНКТНО---------
+select 
+    t2.ORDER_TOTAL + t3.UNIT_PRICE,
+    t2.CUSTOMER_ID
+from OE.orders t2
+    inner join oe.order_items t3
+on t2.ORDER_ID = t3.ORDER_ID
+
+select
+    t2.CUSTOMER_ID,
+    t1.CUST_FIRST_NAME,
+    t1.CUST_LAST_NAME
+from OE.CUSTOMERS t1
+    inner join OE.orders t2
+on t1.CUSTOMER_ID = t2.CUSTOMER_ID
+
+select 
+    t2.ORDER_TOTAL + t3.UNIT_PRICE,
+    t4.CUST_FIRST_NAME,
+    t4.CUST_LAST_NAME
+from OE.orders t2
+    inner join oe.order_items t3
+on t2.ORDER_ID = t3.ORDER_ID
+    inner join OE.CUSTOMERS t4
+on t2.ORDER_ID = t3.ORDER_ID
+
+select
+    t1.SALES_REP_ID,
+    t2.FIRST_NAME,
+    t1.ORDER_STATUS
+from OE.orders t1
+inner join hr.employees t2
+on t1.SALES_REP_ID = t2.EMPLOYEE_ID where ORDER_STATUS > 2
+
+select
+    t1.YEAR,
+    t2.MEDAL,
+    t1.CITY
+from OLYM.OLYM_GAMES t1
+full join OLYM.OLYM_MEDALS t2
+on t1.ID = t2.EVENT_ID where CITY = 'Sydney' and YEAR = 2000
+
+select * from hr.employees
+
+select
+    substr(PHONE_NUMBER, -4, 4)
+from hr.employees
+
+select
+    replace(PHONE_NUMBER, '.')
+from hr.employees
+
+select
+    FIRST_NAME,
+    max(length(EMAIL))
+from hr.employees
+group by FIRST_NAME
+
+select 
+   concat(FIRST_NAME,  LAST_NAME)
+from hr.employees
+
+
+
+
+
+
+
+
+
+
+-- где есть номер, стоит единица, по совместительству я привел номера к виду: +71112223344
+
+select * from dataSource
+
+select
+    case
+        when EMAIL like '% %' or replace(EMAIL, '-', '') like '%+%' or length(EMAIL) = 11
+    then 1
+else 0
+end as phone_number, EMAIL
+from dataSource
+
+
+create table dataSource (
+first_name varchar(255),
+last_name varchar(255),
+email varchar(255),
+gender varchar(255)
+);
+
+
+
+
+
+
+
+create table dataSource (
+first_name varchar(255),
+last_name varchar(255),
+email varchar(255),
+gender varchar(255)
+);
+
+
+
+
+create table dataSource (
+first_name varchar(255),
+last_name varchar(255),
+email varchar(255),
+gender varchar(255)
+);
+
+
+
+
+insert into dataSource (first_name, last_name, email, gender) values
+(null, 'Hilda Sodo', 'hsodo1o@surveymonkey.com', 'F');
+insert into dataSource (first_name, last_name, email, gender) values
+('Torin Cardus', null, 'tcardus21@ow.ly', 'Male');
+insert into dataSource (first_name, last_name, email, gender) values
+(null, 'Artur MacShane', 'amacshane2d@princeton.edu', 'M');
+insert into dataSource (first_name, last_name, email, gender) values
+('Freedman Krause', null, 'fkrause5t@dagondesign.com', 'Male');
+insert into dataSource (first_name, last_name, email, gender) values
+(null, 'Lemmers Remington', 'rlemmers70@tripod.com', 'Male');
+insert into dataSource (first_name, last_name, email, gender) values
+('Tucker', 'Crauford', 'tcraufords@chicagotribune.com +7 9346553 221', 'M');
+insert into dataSource (first_name, last_name, email, gender) values
+('Winfield', 'Sharpe', 'wsharpe5k@amazon.co.jp +7-912-321-84-43', 'Male');
+insert into dataSource (first_name, last_name, email, gender) values
+('Caresa', 'Symmers', '+79824433556', 'F');
+insert into dataSource (first_name, last_name, email, gender) values
+('Rosita', 'McGing', 'rmcging5@nps.gov 89235428443', 'Female');
+insert into dataSource (first_name, last_name, email, gender) values
+('Elinor', 'Barca', 'ebarca54@ning.com 89022338843', 'Female');
+insert into dataSource (first_name, last_name, email, gender) values
+('Paxon', 'Rimington', '89094235643', 'Male');
+insert into dataSource (first_name, last_name, email, gender) values
+('Truda', 'Biffin', 'tbiffin89@wired.com', 'F');
+insert into dataSource (first_name, last_name, email, gender) values
+('Noland', 'Buesden', '893265432 85', 'Male');
+insert into dataSource (first_name, last_name, email, gender) values
+('Brana Champion', null, 'bchampiondv@csmonitor.com', 'Female');
+
+
+
+select * from dataSource
+
+---------ну это я уже скидывал
+select
+    case
+        when regexp_like(GENDER, '[F]')
+            then 'Женщина'
+        else 'Мужчина'
+    end as Gender
+from dataSource
+
+---------только email
+select 
+    case
+        when not regexp_like(email, '[@]')
+            then null
+        when regexp_instr(email, ' ') != 0 
+            then regexp_substr(email, 0, instr(email, ' '))
+        else email
+    end as ONLY_EMAIL
+from dataSource;
+
+---------только номер
+select 
+    case
+        when regexp_instr(email, '\w+[@]\w+[.]\w+.') != 0
+            then regexp_replace(email, '\w+[@]\w+[.]\w+.', '')
+        else email
+    end as ONLY_NUMBER
+from dataSource;
+
+---------только имя
+select 
+    case
+        when regexp_instr(FIRST_NAME, '\w+\s\w+') != 0
+            then regexp_replace(FIRST_NAME, '\w+\s\w+', '')
+        else FIRST_NAME
+    end as ONLY_FIRST_NAME
+from dataSource;
+
+---------только фамилия
+select 
+    case
+        when regexp_instr(LAST_NAME, '\w+\s\w+') != 0
+            then regexp_replace(LAST_NAME, '\w+\s\w+', '')
+        else LAST_NAME
+    end as ONLY_LAST_NAME
+from dataSource;
+
+---------только почта без case
+SELECT 
+    REGEXP_SUBSTR (email, '\w+[@]\w+[.]\w+[.]*\w*')
+    from dataSource
+    
+
+
+
+
+CREATE TABLE data(
+value varchar(512)
+);
+INSERT INTO data(value) values ('<div>
+<p>0</p>
+<h1>Литература на английском языке</h1>
+<p class="title">Moab is my Washpot</p>
+<p class="author">Fry S.</p>
+<p class="price">1150 ?</p>
+</div>');
+INSERT INTO data(value) values ('<div>
+<p>1</p>
+<h1>История. Приключения</h1>
+<p class="title">Остров Сокровищ : роман</p>
+<p class="author">Стивенсон Р. Л.</p>
+<p class="price">1480 ?</p>
+</div>');
+INSERT INTO data(value) values ('<div>
+<p>2</p>
+<h1>Современная отечественная проза</h1>
+<p class="title">Тайное имя - ЙХВХ : шпионский роман-фантазия</p>
+<p class="author">Гиршович Л.</p>
+<p class="price">1660 ?</p>
+</div>');
+INSERT INTO data(value) values ('<div>
+<p>3</p>
+<h1>Современная отечественная проза</h1>
+<p class="title">Жених был в весь черных штанах : рассказы</p>
+<p class="author">Добровинский А.</p>
+<p class="price">950 ?</p>
+</div>');
+INSERT INTO data(value) values ('<div>
+<p>4</p>
+<h1>Зарубежные детективы и боевики</h1>
+<p class="title">Грешница : роман</p>
+<p class="author">Герритсен Т.</p>
+<p class="price">210 ?</p>
+</div>');
+INSERT INTO data(value) values ('<div>
+<p>5</p>
+<h1>Зарубежные детективы и боевики</h1>
+<p class="title">Комната мертвых : роман</p>
+<p class="author">Тилье Ф.</p>
+<p class="price">210 ?</p>
+</div>');
+INSERT INTO data(value) values ('<div><p>6</p>
+<h1>Проза</h1>
+<p class="title">Избранный</p>
+<p class="author">Рубенс Б.</p>
+<p class="price">760 ?</p>
+<div>');
+INSERT INTO data(value) values ('
+</div>
+<p>7</p>
+<h1>Фольклор. Мифология. Эпос</h1>
+<p class="title">Русские народные сказки А. Н. Афанасьева </p>
+<p class="price">61400 ?</p>
+</div>');
+INSERT INTO data(value) values ('<div>
+<p>8</
+<h1>Зарубежные детективы и боевики</h1>
+<p class="title">Утраченный символ : роман</p>
+<p class="author">Браун Д.</p>
+<p class="price">310 ?</p>
+</div>');
+INSERT INTO data(value) values ('<div>
+<p>9</p>
+<h1>Зарубежные детективы и боевики</h1>
+<p class="title">Ангелы и демоны : роман</p>
+<p class="author">Браун Д.</p>
+<p class="price">310 ?</p>
+</div>');
+INSERT INTO data(value) values ('<div>
+<p>10</p>
+<h1>Проза</h1>
+<p class="title">Бремя страстей человеческих : роман</p>
+<p class="author">Моэм С.</p>
+<p class="price">340 ?</p>
+</div>');
+INSERT INTO data(value) values ('<div>
+<p>11</p>
+<h1>Юмор. Сатира</h1>
+<p class="title">Супружество как точная наука : рассказы</p>
+<p class="author">О. Генри.</p>
+<p class="price">180 ?</p>
+</div>');
+INSERT INTO data(value) values ('<div>
+<p>12</
+<h1>Зарубежная фантастик</h1>
+<p class="title"></p>
+<p class="author"> Эльфийский рок : антология</p>
+<p class="price">1240 ?</p>
+</div>');
+INSERT INTO data(value) values ('<div>
+<p>13</p>
+<h1>Зарубежные комиксы</h1>
+<p class="title">Реквием. Рыцарь-вампир. Т.3. Битва драконов. Клуб адского пламени : графические романы</p>
+<p class="author">Миллс П.</p>
+<p class="price">1290 ?</p>
+</div>');
+INSERT INTO data(value) values ('<div>
+<p>14</p>
+<h1>Зарубежные комиксы</h1>
+<p class="title">Эххо. Зеркальный мир. Т.3. Секрет прешонов. Далёкий юг : графические романы</p>
+<p class="author">Арлестон К.</p>
+<p class="price">1290 ?</p>
+</div>');
+INSERT INTO data(value) values ('<div>
+<p>15</p>
+<h1>Современная отечественная проза</h1>
+<p class="title">Два маленьких романа</p>
+<p class="author">Гришковец Е. В.</p>
+<p class="price">520 ?</p>
+</div>');
+INSERT INTO data(value) values ('<div>
+<p>16</p>
+<h1>Зарубежные детективы и боевики</h1>
+<p class="title">Двойник : роман</p>
+<p class="author">Герритсен Т.</p>
+<p class="price">210 ?</p>
+</div>');
+INSERT INTO data(value) values ('<div>
+<p>17</p>
+<h1>Зарубежные детективы и боевики</h1>
+<p class="title">Головоломка : роман</p>
+<p class="author">Тилье Ф.</p>
+<p class="price">210 ?</p>
+</div>');
+INSERT INTO data(value) values ('<div>
+<p>19</p>
+<h1>Художественная публицистика</h1>
+<p class="title">Записные книжки</p>
+<p class="author">Довлатов С.</p>
+<p class="price">400 ?</p>
+</div>');
+INSERT INTO data(value) values ('<div>
+<p>20</p>
+<h1>Литература на английском языке</h1>
+<p class="title">Moab is my Washpot</p>
+<p class="author">Fry S.</p>
+<p class="price">1150 ?</p>
+</div>');
+INSERT INTO data(value) values ('<div>
+<p>21</p>
+<h1>История. Приключения</h1>
+<p class="title">Остров Сокровищ : роман</p>
+<p class="author">Стивенсон Р. Л.</p>
+<p class="price">1480 ?</p>
+</div>');
+INSERT INTO data(value) values ('<div>
+<p>22</p>
+<h1>Современная отечественная проза</h1>
+<p class="title">Тайное имя - ЙХВХ : шпионский роман-фантазия</p>
+<p class="author">Гиршович Л.</p>
+<p class="price">1660 ?</p>
+</div>');
+INSERT INTO data(value) values ('<div>
+<p>23</p>
+<h1>Современная отечественная проза</h1>
+<p class="title">Жених был в весь черных штанах : рассказы</p>
+<p class="author">Добровинский А.</p>
+<p class="price">950 ?</p>
+</div>');
+INSERT INTO data(value) values ('<div>
+<p>24</p>
+<h1>Зарубежные детективы и боевики</h1>
+<p class="title">Грешница : роман</p>
+<p class="author">Герритсен Т.</p>
+<p class="price">210 ?</p>
+</div>');
+INSERT INTO data(value) values ('<div>
+<p>25</p>
+<h1>Зарубежные детективы и боевики</h1>
+<p class="title">Комната мертвых : роман</p>
+<p class="author">Тилье Ф.</p>
+<p class="price">210 ?</p>
+</div>');
+
+select * from data
+
+SELECT REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(VALUE,'p',''),'/',''),'<',''),'h1',''),'div',''),'</',''),'</h1',''),'<div',''),'</div',''),'</p',''),'<h1',''),'<p',''),'>',''),'<p1>',''),'</p1>',''),'<h1>',''),'</h1>',''),'</div>',''),'<div>',''),'<p>',''),'</p>','')
+FROM data;
+
+--id
+select regexp_substr(value, '[<p>]\d+[</p>]')
+from data
+
+--Type
+select regexp_substr(value, '[<h1>]+[а-яА-Я]+\s[а-яА-Я]*\s*[а-яА-Я]*\s*[а-яА-Я]*\s*[а-яА-Я]*\s*[</h1>]+')
+from data
+
+--Title
+select regexp_substr(value, '[A-Za-z]+\s+[A-Za-z]*\s*.*')
+from data
+
+--Price
+select regexp_substr(value, '[>]\d+\s*[?]')
+from data
+------------------------------------------------------------------------------------------------------------------------------
+UPDATE source_data SET FIELD1=1
+
+select
+    sum(FIELD1),
+    ГОД_ВЫПУСКА
+as Year
+from source_data
+group by ГОД_ВЫПУСКА
+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
+Разработка информационной системы для распознавания объектов, их классификации и определения их расположения
+
+16.11
+16 / 63 - депрессия
+26 / 63 - тревожность
+51 / 80 - безнадежность
+
+24.11
+31 / 63 - депрессия
+25 / 63 - тревожность
+59 / 80 - безнадежность
+
+01.12
+30 / 63 - депрессия
+26 / 63 - тревожность
+67 / 80 - безнадежность
