@@ -2,6 +2,7 @@ package ru.horn.har;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import ru.horn.har.DAO.DatabaseDao;
 import ru.horn.har.DAO.JsonParse.JsonParser;

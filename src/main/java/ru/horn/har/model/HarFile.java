@@ -1,8 +1,10 @@
 package ru.horn.har.model;
 
+import com.sun.istack.NotNull;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.context.annotation.Bean;
 
 @Builder
 @AllArgsConstructor
@@ -10,15 +12,22 @@ import org.hibernate.annotations.GenericGenerator;
 public class HarFile {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY, generator = "sql_gen")
-    @SequenceGenerator(name = "id_gen", sequenceName = "seq_id", allocationSize = 1)
+    @NotNull
+    @GeneratedValue(strategy=GenerationType.AUTO, generator = "sql_gen")
+    @SequenceGenerator(name = "id_gen", sequenceName = "hardata_id_seq", allocationSize = 1)
     static Long id;
 
+    @NotNull
     static String version;
+
+    @NotNull
     static String browser;
+
+    @NotNull
     static String content;
 
     public HarFile(String version, String browser, String content) {
+        this.id = id;
         this.version = version;
         this.browser = browser;
         this.content = content;

@@ -1,11 +1,7 @@
 package ru.horn.har.DAO;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 import ru.horn.har.DAO.JsonParse.JsonParser;
 import ru.horn.har.model.HarFile;
 
@@ -22,12 +18,13 @@ public class DatabaseDao {
     public void addContent(HarFile harFileDAO) {
 
         try (Connection conn = DriverManager.getConnection(url, username, password)) {
-            PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO " + table + " VALUES(?, ?, ?, ?)");
-            preparedStatement.setLong(1, HarFile.getId());
-            preparedStatement.setString(2, HarFile.getVersion());
-            preparedStatement.setString(3, HarFile.getBrowser());
-            preparedStatement.setString(4, HarFile.getContent());
 
+            PreparedStatement preparedSequence = conn.prepareStatement("CREATE SEQUENCE IF NOT EXISTS hardata_id_seq;");
+            preparedSequence.executeUpdate();
+            PreparedStatement preparedStatement = conn.prepareStatement("INSERT INTO " + table + " VALUES(nextval('hardata_id_seq'), ?, ?, ?) RETURNING id");
+            preparedStatement.setString(1, HarFile.getVersion());
+            preparedStatement.setString(2, HarFile.getBrowser());
+            preparedStatement.setString(3, HarFile.getContent());
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
