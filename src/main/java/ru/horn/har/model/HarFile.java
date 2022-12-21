@@ -1,77 +1,37 @@
 package ru.horn.har.model;
 
-import com.sun.istack.NotNull;
-import jakarta.persistence.*;
-import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
-import org.springframework.context.annotation.Bean;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Builder
+@Getter
+@Setter
+@NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "har_data")
 public class HarFile {
 
     @Id
-    @NotNull
-    @GeneratedValue(strategy=GenerationType.AUTO, generator = "sql_gen")
-    @SequenceGenerator(name = "id_gen", sequenceName = "hardata_id_seq", allocationSize = 1)
-    static Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @NotNull
-    static String version;
+    @Column(nullable = false)
+    private String version;
 
-    @NotNull
-    static String browser;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private EBrowser browser;
 
-    @NotNull
-    static String content;
-
-    public HarFile(String version, String browser, String content) {
-        this.id = id;
-        this.version = version;
-        this.browser = browser;
-        this.content = content;
-    }
-
-    public static Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public static String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
-    }
-
-    public static String getBrowser() {
-        return browser;
-    }
-
-    public void setBrowser(String browser) {
-        this.browser = browser;
-    }
-
-    public static String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    @Override
-    public String toString() {
-        return "HarFile{" +
-                "id=" + id +
-                ", version='" + version + '\'' +
-                ", browser='" + browser + '\'' +
-                ", content='" + content + '\'' +
-                '}';
-    }
+    @Column(nullable = false)
+    private String content;
 }
