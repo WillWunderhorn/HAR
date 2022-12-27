@@ -10,5 +10,4 @@ public class HarApplication {
         SpringApplication.run(HarApplication.class, args);
 
     }
-
 }

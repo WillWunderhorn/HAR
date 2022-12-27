@@ -1,9 +1,6 @@
 package ru.horn.har.services;
 
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
@@ -18,6 +15,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Objects;
 
 @Service
@@ -26,6 +24,12 @@ public class HarService extends HttpServlet {
     private final HarConfig config;
     private final HarFileRepository repository;
     private UploadController uploadController;
+    static String text;
+    static ArrayList<String> contents = new ArrayList<>();
+
+    public static ArrayList<String> getContents() {
+        return contents;
+    }
 
     public String handle(
             Model model,
@@ -42,7 +46,7 @@ public class HarService extends HttpServlet {
                 String version = filePack.getImplementationVersion();
                 try {
                     byte[] bytes = file.getBytes();
-                    String text = new String(bytes);
+                    text = new String(bytes);
                     Path fileNamePath = Paths.get(config.getDir(), file.getOriginalFilename());
 
                     fileNames.append(file.getOriginalFilename())
@@ -52,19 +56,24 @@ public class HarService extends HttpServlet {
                             .append(text)
                             .append(" ");
 
+                    contents.add(text);
                     repository.save(
                             new HarFile(null, version, browser, text)
                     );
+
+                    System.out.println(contents);
 
                     Files.write(fileNamePath, file.getBytes());
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             }
+
         }
         model.addAttribute("message", "Successfully uploaded files: ");
         model.addAttribute("filesList", fileNames.toString());
         model.addAttribute("browser", "Browser: " + browser.name());
         return userAgent;
     }
+
 }
