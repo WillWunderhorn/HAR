@@ -1,0 +1,62 @@
+body {
+    display: flex;
+    height: 10em;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    background-color: #3a3a3a;
+    text-align: center;
+}
+
+.fileio {
+    font-size: 200px;
+    position: relative;
+    color: cornsilk;
+    font-family: Calibri;
+}
+
+.info {
+    color: bisque;
+    position: absolute;
+    font-family: Calibri;
+    top: 100%;
+    background-color: #64523d;
+    width: 20%;
+    margin: 30px;
+    padding: 20px;
+    border-radius: 20px;
+    text-align: center;
+}
+
+.menu {
+    background-color: #3a3a3a;
+    padding: 10px;
+    position: relative;
+    border-radius: 15px;
+    justify-content: center;
+    display: flex;
+}
+
+.file_button {
+    position: relative;
+    font-family: Calibri;
+    background-color: rgba(255, 255, 255, 0.47);
+    padding: 10px;
+    border-radius: 10px;
+    border-color: bisque;
+    text-align: center;
+    color: bisque;
+    width: 114px
+}
+
+.upload_button {
+    position: relative;
+    font-family: Calibri;
+    background-color: rgba(255, 255, 255, 0.47);
+    padding: 10px;
+    border-radius: 10px;
+    border-color: bisque;
+    text-align: center;
+    color: bisque;
+    width: 114px
+}

@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Uploading Error</title>
+    <link rel="stylesheet" href="/uploadingError_style.css">
 </head>
 <body>
 <div>
-  <h1>The file must not be empty and have the .HAR extension</h1>
+    <h1 class="error">ERROR!</h1>
+    <h1 class="title">The file must not be empty and have the .HAR extension</h1>
     <span th:text="${emp}">is invalid</span><br>
-  <span><a href="/">Back to home page ant try again</a></span>
+  <span><a href="/" class="try_again"><u><- Back to home page and try again</u></a></span>
 </div>
 </body>
 </html>

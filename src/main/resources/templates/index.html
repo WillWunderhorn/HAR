@@ -3,11 +3,21 @@
 <head>
     <meta charset="UTF-8"></meta>
     <title>HAR file Uploading</title>
+
+    <link rel="stylesheet" href="/index_style.css">
+
 </head>
 <body>
-    <form action="/upload" method="post" enctype="multipart/form-data">
-        <input type="file" name="files" multiple>
-        <input type="submit" value="Upload Files"></input>
-    </form>
+<h1 class="fileio">FILE.IO</h1>
+<div class="info">
+    <h3>select your .har files and save information about them into your database!</h3>
+    <div class="menu">
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <input type="file" name="files" id="select-b" style="display:none" multiple>
+            <label for="select-b" class="file_button">Select Content</label>
+            <input type="submit" class="upload_button" value="Upload">
+        </form>
+    </div>
+</div>
 </body>
 </html>

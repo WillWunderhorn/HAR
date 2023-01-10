@@ -1,0 +1,46 @@
+body {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    background-color: #3a3a3a;
+    text-align: center;
+}
+
+.success {
+    background-color: #64523d;
+    padding: 20px;
+    border-radius: 10px;
+    width: 30%
+}
+
+.files_info {
+    background-color: #3a3a3a;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 5px 0;
+}
+
+.message {
+    font-size: 50px;
+    font-family: Calibri;
+    color: cornsilk;
+}
+
+.filesList {
+    font-family: Calibri;
+    color: cornsilk;
+}
+
+.browser {
+    font-family: Calibri;
+    color: cornsilk;
+}
+
+.go_home {
+    font-size: 30px;
+    position: relative;
+    color: cornsilk;
+    font-family: Calibri;
+    color: cornsilk;
+}

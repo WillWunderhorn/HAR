@@ -1,0 +1,30 @@
+body {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+    background-color: #3a3a3a;
+    text-align: center;
+}
+
+.error {
+    font-size: 50px;
+    position: relative;
+    color: rgb(255, 0, 0);
+    font-family: Calibri;
+}
+
+.title {
+    font-size: 80px;
+    position: relative;
+    color: cornsilk;
+    font-family: Calibri;
+}
+
+.try_again {
+    font-size: 50px;
+    position: relative;
+    color: cornsilk;
+    font-family: Calibri;
+    color: cornsilk;
+}

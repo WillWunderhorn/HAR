@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8"></meta>
-  <title>Upload</title>
+    <meta charset="UTF-8">
+    <title>Upload</title>
+    <link rel="stylesheet" href="/view_style.css">
 </head>
 <body>
-<div th:if="${message}">
-  <span th:text="${message}"></span><br>
-  <span th:text="${filesList}"></span><br>
-  <span th:text="${browser}"></span>
-</div>
-<div>
-  <span><a href="/">Back to home page</a></span>
+<div th:if="${message}" class="success">
+    <span th:text="${message}" class="message"></span><br>
+    <div class="files_info">
+        <span th:text="${filesList}" class="filesList"></span><br>
+        <span th:text="${browser}" class="browser"></span>
+    </div>
+    <span><a href="/" class="go_home"><u><- Back to home page</u></a></span>
 </div>
 </body>
 </html>
